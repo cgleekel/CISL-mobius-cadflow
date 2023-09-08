@@ -1,15 +1,18 @@
 import unittest
 import sys
 import os
-sys.path.append("../src/")
 
-from BitStream import BitStream
+sys.path.append("..")
+
+from utils.BitStream import BitStream
 
 sys.path.append("")
+
+
 class TestBitStream(unittest.TestCase):
     def setUp(self):
         self.bs = BitStream()
-        self.bs.netlistInput("../../circuit_data/netlist_catalog/test_schem_inv_nl.txt")
+        self.bs.netlistInput("circuit_data/netlist_catalog/test_schem_inv_nl.txt")
         bitstream = self.bs.generateBitstream()
 
     # # def test_manualInput(self):
@@ -29,8 +32,8 @@ class TestBitStream(unittest.TestCase):
         # Test generateBitstream method
         bitstream = self.bs.generateBitstream()
         # Assert that bitmatrix and bitstream attributes are set correctly
-        self.assertEqual(len(self.bs.bitmatrix), 10) 
-        self.assertEqual(len(self.bs.bitmatrix[0]), 65) 
+        self.assertEqual(len(self.bs.bitmatrix), 10)
+        self.assertEqual(len(self.bs.bitmatrix[0]), 65)
         self.assertIsInstance(self.bs.bitmatrix[0][0], int)
         self.assertEqual(len(self.bs.bitstream), 650)
         self.assertIsInstance(self.bs.bitstream[0], int)
@@ -41,7 +44,6 @@ class TestBitStream(unittest.TestCase):
         power_buses = self.bs.getPowerBuses()
         self.assertEqual(power_buses, correct_power_buses)
 
-
     def test_compareStream(self):
         # Test compareStream method
         cstream = self.bs.bitstream
@@ -49,7 +51,7 @@ class TestBitStream(unittest.TestCase):
 
     def test_compareFile(self):
         # Test compareFile method
-        cfpath = "../../circuit_data/bitstream_catalog/inv1x_schem_nl.txt"
+        cfpath = "circuit_data/bitstream_catalog/inv1x_schem_nl.txt"
         self.bs.writeBitFile(cfpath)
         self.assertTrue(self.bs.compareFile(cfpath))
 
